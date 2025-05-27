@@ -1,10 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
-
-# The code snippet processes weather data to assess the impact of extreme weather on fishing days, calculates economic losses, and provides insights and recommendations based on the analysis
-
+# The code snippet processes weather data to assess the impact of extreme weather on fishing days, calculates economic losses, to enable us generate insights and recommendations based on the analysis
 # In[ ]:
-
 
 import pandas as pd 
 import numpy as np 
@@ -20,9 +17,9 @@ df['Day'] = df['Date'].dt.day
 df['Year'] = df['Date'].dt.year 
 
 # Define thresholds for extreme weather 
-RAINFALL_THRESHOLD = 50 # mm 
+RAINFALL_THRESHOLD = 50 # mm/hr 
 WIND_SPEED_THRESHOLD = 5 # m/s 
-SWH_THRESHOLD = 2 
+SWH_THRESHOLD = 2 #ft
 
 # meters # Create binary indicators for extreme weather 
 df['Extreme_Rainfall'] = df['Rainfall'] > RAINFALL_THRESHOLD 
@@ -72,44 +69,11 @@ total_economic_impact = yearly_trends['Economic_Loss'].mean()
 worst_month = monthly_patterns.loc[monthly_patterns['Extreme_Weather_Day'].idxmax()] 
 trend_coefficient = np.polyfit(range(len(yearly_trends)), yearly_trends['Extreme_Weather_Day'], 1)[0] 
 
-# Print insights 
-print("\ Advanced Prescriptive Analysis Insights:") 
-print("\ 1. Impact Assessment:") 
-print(f"- Average Annual Days Lost: {total_days_lost:.1f}") 
-print(f"- Average Annual Economic Impact: ₹{total_economic_impact:,.2f}") 
-print(f"- Most Challenging Month: {calendar.month_name[int(worst_month['Month'])]} " f"({worst_month['Extreme_Weather_Day']:.1f} days)") 
-print("\ 2. Trend Analysis:") 
-print(f"- Year-over-Year Trend: {trend_coefficient:.2f} days/year") 
-print("- Long-term Projection: " + ("Increasing" if trend_coefficient > 0 else "Decreasing") + " frequency of extreme weather events") 
-
-# Calculate risk levels and recommendations 
-monthly_patterns['Risk_Level'] = pd.qcut(monthly_patterns['Extreme_Weather_Day'], q=3, labels=['Low', 'Medium', 'High']) 
-print("\ 3. Risk Assessment and Recommendations:") for _, row in monthly_patterns.sort_values('Extreme_Weather_Day', ascending=False).head(3).iterrows(): month_name = calendar.month_name[int(row['Month'])] 
-    print(f"\ {month_name} (High Risk):") 
-    print(f"- Average Lost Days: {row['Extreme_Weather_Day']:.1f}") 
-    print(f"- Economic Impact: ₹{row['Economic_Loss']:,.2f}") 
-    print("Recommendations:") 
-    print("- Consider alternative income sources") 
-    print("- Plan maintenance and repairs") 
-    print("- Focus on savings during better months") 
-    
-    # Calculate adaptation metrics 
-    adaptation_potential = (yearly_trends['Extreme_Weather_Day'].max() - yearly_trends['Extreme_Weather_Day'].min()) / \ yearly_trends['Extreme_Weather_Day'].mean() * 100 
-    print("\ 4. Adaptation Strategies:") 
-    print(f"- Adaptation Potential: {adaptation_potential:.1f}%") 
-    print("- Short-term Recommendations:") 
-    print(" * Implement early warning systems") 
-    print(" * Invest in weather-resistant equipment") 
-    print("- Long-term Recommendations:") 
-    print(" * Develop alternative livelihood programs") 
-    print(" * Create community-based insurance schemes") 
-    print(" * Establish emergency funds")
-
-
+# Calculate adaptation metrics 
+adaptation_potential = (yearly_trends['Extreme_Weather_Day'].max() - yearly_trends['Extreme_Weather_Day'].min()) / \ yearly_trends['Extreme_Weather_Day'].mean() * 100 
 # The code snippet performed statistical analysis on extreme weather event data, calculating z-scores, mean, standard deviation, and impact severity at various thresholds, followed by visualizing the results
 
 # In[ ]:
-
 
 # Analyze the cumulative impact of extreme weather events with different thresholds thresholds = [1, 2, 3, 4, 5] 
 # Different thresholds for extreme weather event counts impact_analysis = [] for threshold in thresholds: 
